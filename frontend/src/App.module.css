@@ -218,6 +218,33 @@
 .modal label {
   font-size: 0.9rem;
   color: #666;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.modalField {
+  margin-bottom: 20px;
+}
+
+.dateInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1a1a1a;
+  background-color: white;
+}
+
+.durationInputs {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.inputGroup {
+  flex: 1;
 }
 
 .modal input {
@@ -225,6 +252,8 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
+  width: 100%;
+  text-align: center;
 }
 
 .modalButtons {

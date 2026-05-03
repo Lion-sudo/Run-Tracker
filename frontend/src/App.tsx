@@ -13,7 +13,10 @@ function App() {
   const [calories, setCalories] = useState(0);
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
-  const [duration, setDuration] = useState('');
+  const [hours, setHours] = useState('0');
+  const [minutes, setMinutes] = useState('0');
+  const [seconds, setSeconds] = useState('0');
+  const [runDate, setRunDate] = useState(new Date().toISOString().split('T')[0]);
   const [isSaving, setIsSaving] = useState(false);
   
   const navigate = useNavigate();
@@ -57,6 +60,19 @@ function App() {
     }
     
     if (!distance || isSaving) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    if (runDate > today) {
+      alert("You cannot log a run for a future date!");
+      return;
+    }
+
+    const totalSeconds = (parseInt(hours) * 3600) + (parseInt(minutes) * 60) + parseInt(seconds);
+    
+    if (totalSeconds <= 0) {
+      alert("Please enter a valid duration!");
+      return;
+    }
     
     setIsSaving(true);
     try {
@@ -66,16 +82,20 @@ function App() {
           {
             distance: distance,
             calories: calories,
-            duration_minutes: parseInt(duration),
+            duration_seconds: totalSeconds,
             route_coordinates: routeCoords,
-            user_id: session.user.id
+            user_id: session.user.id,
+            run_date: runDate
           }
         ]);
 
       if (!error) {
         alert("Run saved successfully!");
         setShowSaveModal(false);
-        setDuration('');
+        setHours('0');
+        setMinutes('0');
+        setSeconds('0');
+        setRunDate(new Date().toISOString().split('T')[0]);
         setDistance(0);
         setCalories(0);
         setRouteCoords([]);
@@ -172,15 +192,52 @@ function App() {
           <div className={styles.modal}>
             <h3>Save your Run</h3>
             <form onSubmit={handleSaveRun}>
-              <label>How many minutes did you run?</label>
-              <input 
-                type="number" 
-                value={duration} 
-                onChange={(e) => setDuration(e.target.value)} 
-                required 
-                placeholder="Minutes"
-                autoFocus
-              />
+              <div className={styles.modalField}>
+                <label>Date of Run</label>
+                <input 
+                  type="date" 
+                  value={runDate} 
+                  onChange={(e) => setRunDate(e.target.value)} 
+                  required 
+                  className={styles.dateInput}
+                  max={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+
+              <div className={styles.durationInputs}>
+                <div className={styles.inputGroup}>
+                  <label>Hours</label>
+                  <input 
+                    type="number" 
+                    value={hours} 
+                    onChange={(e) => setHours(e.target.value)} 
+                    min="0"
+                    required 
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Minutes</label>
+                  <input 
+                    type="number" 
+                    value={minutes} 
+                    onChange={(e) => setMinutes(e.target.value)} 
+                    min="0"
+                    max="59"
+                    required 
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Seconds</label>
+                  <input 
+                    type="number" 
+                    value={seconds} 
+                    onChange={(e) => setSeconds(e.target.value)} 
+                    min="0"
+                    max="59"
+                    required 
+                  />
+                </div>
+              </div>
               <div className={styles.modalButtons}>
                 <button type="button" onClick={() => setShowSaveModal(false)}>Cancel</button>
                 <button type="submit" disabled={isSaving}>
