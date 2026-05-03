@@ -66,7 +66,7 @@ const Map: React.FC<MapProps> = ({ onRouteUpdate }) => {
           .join(';');
 
         // 'foot' profile for runners
-        const url = `http://router.project-osrm.org/route/v1/foot/${coordinatesString}?overview=full&geometries=geojson`;
+        const url = `https://router.project-osrm.org/route/v1/foot/${coordinatesString}?overview=full&geometries=geojson`;
 
         const response = await fetch(url);
         const data = await response.json();
