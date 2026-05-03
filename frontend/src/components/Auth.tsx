@@ -9,13 +9,18 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [message, setMessage] = useState('');
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-
+    
     try {
       if (isSignUp) {
         const { error } = await supabase.auth.signUp({ email, password });
@@ -34,10 +39,29 @@ export default function Auth() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onMouseMove={handleMouseMove}>
+      {/* Interactive Background Elements */}
+      <div 
+        className={styles.mouseFollower} 
+        style={{ 
+          transform: `translate(${mousePos.x}px, ${mousePos.y}px)` 
+        }} 
+      />
+      <div className={styles.bgDecorations}>
+        <div className={styles.circle1}></div>
+        <div className={styles.circle2}></div>
+        <div className={styles.circle3}></div>
+        <div className={styles.circle4}></div>
+        <div className={styles.circle5}></div>
+      </div>
+
       <div className={styles.authBox}>
-        <h2 className={styles.title}>{isSignUp ? 'Create an Account' : 'Welcome Back'}</h2>
-        <p className={styles.subtitle}>Sign in to start mapping your runs</p>
+        <h2 className={styles.title}>{isSignUp ? 'Join the Journey' : 'Welcome Back'}</h2>
+        <p className={styles.subtitle}>
+          {isSignUp 
+            ? 'Track every step, crush every goal.' 
+            : 'Log in to continue your journey.'}
+        </p>
         
         <form onSubmit={handleAuth} className={styles.form}>
           <input
