@@ -6,7 +6,7 @@ interface Run {
   id: string;
   distance: number;
   calories: number;
-  duration_minutes: number;
+  duration_seconds: number;
   run_date: string;
   created_at: string;
 }
@@ -15,6 +15,26 @@ export default function History() {
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  const formatDuration = (totalSeconds: number) => {
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    
+    return [
+      hrs > 0 ? hrs.toString().padStart(2, '0') : null,
+      mins.toString().padStart(2, '0'),
+      secs.toString().padStart(2, '0')
+    ].filter(Boolean).join(':');
+  };
+
+  const calculatePace = (distance: number, totalSeconds: number) => {
+    if (!distance || !totalSeconds) return '0:00';
+    const paceSecondsPerKm = totalSeconds / distance;
+    const paceMins = Math.floor(paceSecondsPerKm / 60);
+    const paceSecs = Math.round(paceSecondsPerKm % 60);
+    return `${paceMins}:${paceSecs.toString().padStart(2, '0')}`;
+  };
 
   useEffect(() => {
     const fetchRuns = async () => {
@@ -127,12 +147,18 @@ export default function History() {
               <div key={run.id} className={styles.runCard}>
                 <div className={styles.runInfo}>
                   <span className={styles.date}>{new Date(run.run_date).toLocaleDateString()}</span>
-                  <span className={styles.distance}>{run.distance.toFixed(2)} <small style={{fontSize: '0.6em', opacity: 0.6}}>KM</small></span>
+                  <span className={styles.distance}>
+                    {run.distance.toFixed(2)} 
+                    <small style={{fontSize: '0.6em', opacity: 0.6, marginLeft: '4px'}}>KM</small>
+                  </span>
+                  <span style={{fontSize: '0.85rem', color: '#7f8c8d', marginTop: '4px'}}>
+                    Pace: <strong>{calculatePace(run.distance, run.duration_seconds)}</strong> min/km
+                  </span>
                 </div>
                 <div className={styles.runDetails}>
                   <div className={styles.statItem}>
-                    <span className={styles.statValue}>{run.duration_minutes}</span>
-                    <span className={styles.statLabel}>Mins</span>
+                    <span className={styles.statValue}>{formatDuration(run.duration_seconds)}</span>
+                    <span className={styles.statLabel}>Time</span>
                   </div>
                   <div className={styles.statItem}>
                     <span className={styles.statValue}>{run.calories}</span>
