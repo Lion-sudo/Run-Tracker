@@ -14,7 +14,7 @@ let DefaultIcon = L.icon({
   iconAnchor: [12, 41]
 });
 
-L.Marker.prototype.options.icon = DefaultIcon;
+// L.Marker.prototype.options.icon = DefaultIcon;
 
 interface MapProps {
   onRouteUpdate: (distance: number, route: [number, number][]) => void;
@@ -50,6 +50,8 @@ const Map: React.FC<MapProps> = ({ onRouteUpdate }) => {
 
   // Fetch route from OSRM whenever points change
   useEffect(() => {
+    L.Marker.prototype.options.icon = DefaultIcon;
+
     if (points.length < 2) { // can't draw line with less than 2 points
       setRouteLine([]);
       onRouteUpdate(0, []);
