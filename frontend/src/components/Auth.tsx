@@ -25,7 +25,7 @@ export default function Auth() {
       if (isSignUp) {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        setMessage('Success! (Check your email for the confirmation link if enabled)');
+        setMessage('Success! (Check your email for the confirmation link)');
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
