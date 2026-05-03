@@ -98,7 +98,7 @@ function App() {
       {/* Header Area */}
       <header className={styles.header}>
         <div className={styles.headerNav}>
-          <Link to="/" className={styles.logo}>Run Planner</Link>
+          <Link to="/" className={styles.logo}>Run Tracker</Link>
           <div className={styles.navLinks}>
             <Link to="/map" className={styles.navLink}>Map</Link>
             <Link to="/runs" className={styles.navLink}>My History</Link>
