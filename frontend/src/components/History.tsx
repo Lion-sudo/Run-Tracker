@@ -15,6 +15,11 @@ export default function History() {
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
 
   const formatDuration = (totalSeconds: number) => {
     const hrs = Math.floor(totalSeconds / 3600);
@@ -71,7 +76,8 @@ export default function History() {
 
   if (!isAuthenticated) {
     return (
-      <div className={styles.pageWrapper}>
+      <div className={styles.pageWrapper} onMouseMove={handleMouseMove}>
+        <div className={styles.mouseFollower} style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }} />
         <div className={styles.topoContainer}>
           <div className={`${styles.peak} ${styles.peak1}`}>
             <div className={`${styles.contourLine} ${styles.p1_l1}`} />
@@ -104,7 +110,8 @@ export default function History() {
   }
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className={styles.pageWrapper} onMouseMove={handleMouseMove}>
+      <div className={styles.mouseFollower} style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }} />
       {/* Topographic Background Decorations */}
       <div className={styles.topoContainer}>
         {/* Peak 1 - Top Left */}
