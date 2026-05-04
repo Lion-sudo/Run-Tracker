@@ -72,6 +72,17 @@ export default function History() {
     fetchRuns();
   }, []);
 
+  const deleteRun = async (id: string) => {
+    try {
+      const { error } = await supabase.from('runs').delete().eq('id', id);
+      if (error) throw error;
+      setRuns(prevRuns => prevRuns.filter(run => run.id !== id));
+    } catch (err) {
+      console.error("Failed to delete run:", err);
+      alert("Could not delete the run. Please try again.");
+    }
+  };
+
   if (loading) return <div className={styles.loading}>Loading your history...</div>;
 
   if (!isAuthenticated) {
@@ -146,7 +157,7 @@ export default function History() {
         
         {runs.length === 0 ? (
           <div className={styles.emptyState}>
-            <p>No runs saved yet. Get out there and start planning!</p>
+            <p>No runs saved yet. Get out there and start running!</p>
           </div>
         ) : (
           <div className={styles.runList}>
@@ -172,10 +183,18 @@ export default function History() {
                     <span className={styles.statLabel}>Kcal</span>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+                <button 
+                  className={styles.deleteButton} 
+                  onClick={() => deleteRun(run.id)}
+                  aria-label="Delete run"
+                >
+                  &times;
+                </button>
+                </div>
+                ))}
+                </div>
+                )
+}
       </div>
     </div>
   );

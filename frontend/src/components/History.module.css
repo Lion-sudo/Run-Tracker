@@ -179,6 +179,26 @@
   border-color: rgba(53, 236, 47, 0.4);
 }
 
+.deleteButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #ff7675;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.2s;
+  border-radius: 5px;
+}
+
+.deleteButton:hover {
+  color: #d63031;
+  background: rgba(255, 118, 117, 0.1);
+}
+
 .runInfo {
   display: flex;
   flex-direction: column;
