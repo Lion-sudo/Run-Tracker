@@ -18,6 +18,9 @@ let DefaultIcon = L.icon({
 
 interface MapProps {
   onRouteUpdate: (distance: number, route: [number, number][]) => void;
+  onPointCountChange?: (count: number) => void;
+  undoPointRef?: React.MutableRefObject<(() => void) | null>;
+  clearRouteRef?: React.MutableRefObject<(() => void) | null>;
 }
 
 const LocationMarker = ({ points, setPoints, routeLine }: { points: LatLng[], setPoints: React.Dispatch<React.SetStateAction<LatLng[]>>, routeLine: [number, number][] }) => {
@@ -39,7 +42,7 @@ const LocationMarker = ({ points, setPoints, routeLine }: { points: LatLng[], se
   );
 };
 
-const Map: React.FC<MapProps> = ({ onRouteUpdate }) => {
+const Map: React.FC<MapProps> = ({ onRouteUpdate, onPointCountChange, undoPointRef, clearRouteRef }) => {
   // Default center coordinates (London)
   const defaultCenter: [number, number] = [51.505, -0.09];
 
@@ -47,6 +50,15 @@ const Map: React.FC<MapProps> = ({ onRouteUpdate }) => {
   const [points, setPoints] = useState<LatLng[]>([]);
   // State to hold the detailed street path returned from OSRM
   const [routeLine, setRouteLine] = useState<[number, number][]>([]);
+
+  useEffect(() => {
+    if (onPointCountChange) onPointCountChange(points.length);
+  }, [points, onPointCountChange]);
+
+  useEffect(() => {
+    if (undoPointRef) undoPointRef.current = () => setPoints(prev => prev.slice(0, -1));
+    if (clearRouteRef) clearRouteRef.current = () => setPoints([]);
+  }, [undoPointRef, clearRouteRef]);
 
   // Fetch route from OSRM whenever points change
   useEffect(() => {

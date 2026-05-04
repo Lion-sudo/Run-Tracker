@@ -12,13 +12,16 @@ function App() {
   const [distance, setDistance] = useState(0);
   const [calories, setCalories] = useState(0);
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
+  const [pointCount, setPointCount] = useState(0);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [hours, setHours] = useState('0');
   const [minutes, setMinutes] = useState('0');
   const [seconds, setSeconds] = useState('0');
   const [runDate, setRunDate] = useState(new Date().toISOString().split('T')[0]);
   const [isSaving, setIsSaving] = useState(false);
-  
+  const undoPointRef = React.useRef<(() => void) | null>(null);
+  const clearRouteRef = React.useRef<(() => void) | null>(null);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,8 +48,6 @@ function App() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setSession(null);
-    // Force a full page reload to clear all local state (like map pins) 
-    // and reset the app to a clean guest state.
     window.location.href = '/map';
   };
 
@@ -135,7 +136,14 @@ function App() {
       <main className={styles.mainContent}>
         <Routes>
           <Route path="/" element={<Navigate to="/map" replace />} />
-          <Route path="/map" element={<Map onRouteUpdate={handleRouteUpdate} />} />
+          <Route path="/map" element={
+            <Map 
+              onRouteUpdate={handleRouteUpdate} 
+              onPointCountChange={(count) => setPointCount(count)} 
+              undoPointRef={undoPointRef} 
+              clearRouteRef={clearRouteRef} 
+            />
+          } />
           <Route path="/runs" element={<History />} />
           <Route path="/login" element={session ? <Navigate to="/map" replace /> : <Auth />} />
           {/* Catch-all route to redirect undefined paths back to the map */}
@@ -153,6 +161,23 @@ function App() {
           <div className={styles.statBox}>
             <div className={styles.statValue}>{calories}</div>
             <div className={styles.statLabel}>Calories</div>
+          </div>
+          
+          <div className={styles.mapControls}>
+            <button 
+              className={`${styles.controlButton} ${pointCount === 0 ? styles.disabledButton : ''}`} 
+              onClick={() => undoPointRef.current?.()}
+              disabled={pointCount === 0}
+            >
+              Undo
+            </button>
+            <button 
+              className={`${styles.controlButton} ${pointCount === 0 ? styles.disabledButton : ''}`} 
+              onClick={() => clearRouteRef.current?.()}
+              disabled={pointCount === 0}
+            >
+              Clear
+            </button>
           </div>
           
           {session ? (

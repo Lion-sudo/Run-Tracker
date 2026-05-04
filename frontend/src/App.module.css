@@ -82,6 +82,31 @@
   align-items: center;
 }
 
+.mapControls {
+  display: flex;
+  gap: 10px;
+}
+
+.controlButton {
+  background: #f1f1f1;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.controlButton:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.disabledButton {
+  background: #f9f9f9;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
 .statBox {
   text-align: center;
 }
