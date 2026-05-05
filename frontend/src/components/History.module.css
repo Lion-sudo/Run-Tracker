@@ -1,9 +1,8 @@
 .pageWrapper {
-  min-height: calc(100vh - 80px);
+  min-height: 100%;
   width: 100%;
   background-color: #ffffff;
   position: relative;
-  overflow: hidden;
   padding: 5vh 5vw;
   cursor: default;
 }
@@ -262,16 +261,39 @@
 }
 
 @media (max-width: 600px) {
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
   .runCard {
-    padding: 20px;
+    padding: 15px;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px;
+    gap: 15px;
   }
   
   .runDetails {
     justify-content: space-between;
-    border-top: 1px solid #f5f5f5;
-    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 12px;
+  }
+
+  .viewPathButton {
+    position: static;
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .deleteButton {
+    top: 10px;
+    bottom: auto;
+    right: 10px;
+  }
+
+  .distance {
+    font-size: 1.5rem;
   }
 }

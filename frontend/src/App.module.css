@@ -32,8 +32,25 @@
 
 .navLinks {
   display: flex;
-  gap: 1.5rem;
+  gap: 2.5rem;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .headerNav {
+    flex-direction: column;
+    gap: 15px;
+    padding: 0.75rem 0;
+  }
+
+  .navLinks {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
 }
 
 .navLink {
@@ -68,6 +85,7 @@
   flex: 1; /* Take up all remaining space */
   position: relative;
   background-color: #f8f9fa;
+  overflow-y: auto;
 }
 
 .controlPanel {
@@ -85,6 +103,46 @@
 .mapControls {
   display: flex;
   gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .controlPanel {
+    padding: 1rem 0.5rem;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .statBox {
+    flex: 1 1 40%;
+  }
+
+  .statValue {
+    font-size: 1.2rem;
+  }
+
+  .mapControls {
+    flex-direction: column-reverse;
+    gap: 5px;
+    flex: 1 1 20%;
+  }
+
+  .controlButton {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .saveButton, .guestSaveButton {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    flex: 1 1 100%;
+    margin-top: 5px;
+  }
+  
+  .tooltipContainer {
+    width: 100%;
+  }
 }
 
 .controlButton {
@@ -305,4 +363,3 @@
   background: #35ec2f;
   color: #1a1a1a;
 }
-
