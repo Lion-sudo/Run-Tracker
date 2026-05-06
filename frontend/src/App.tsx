@@ -5,6 +5,7 @@ import type { Session } from '@supabase/supabase-js';
 import Map from './components/Map';
 import Auth from './components/Auth';
 import History from './components/History';
+import Insights from './components/Insights';
 import styles from './App.module.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
   const [pointCount, setPointCount] = useState(0);
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showInsightsSidebar, setShowInsightsSidebar] = useState(false);
   const [hours, setHours] = useState('0');
   const [minutes, setMinutes] = useState('0');
   const [seconds, setSeconds] = useState('0');
@@ -123,6 +125,20 @@ function App() {
           <div className={styles.navLinks}>
             <Link to="/map" className={styles.navLink}>Map</Link>
             <Link to="/runs" className={styles.navLink}>My History</Link>
+            <Link to="/insights" className={`${styles.navLink} ${styles.desktopOnly}`}>Insights</Link>
+            
+            <button 
+              onClick={() => setShowInsightsSidebar(true)} 
+              className={styles.hamburgerButton}
+              aria-label="Menu"
+            >
+              <div className={styles.hamburgerIcon}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </button>
+
             {session ? (
               <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
             ) : (
@@ -131,6 +147,44 @@ function App() {
           </div>
         </div>
       </header>
+
+      {/* Mobile Sidebar */}
+      {showInsightsSidebar && (
+        <div className={styles.sidebarOverlay} onClick={() => setShowInsightsSidebar(false)}>
+          <div className={styles.sidebar} onClick={(e) => e.stopPropagation()}>
+            {/* Topographic Decorations for Premium Feel */}
+            <div className={styles.sidebarTopo}>
+              <div className={styles.peak}>
+                <div className={styles.contourLine} />
+                <div className={styles.contourLine} />
+                <div className={styles.contourLine} />
+              </div>
+              <div className={styles.activePath} />
+            </div>
+
+            <div className={styles.sidebarHeader}>
+              <div className={styles.sidebarLogo}>
+                <span className={styles.logoDot}></span>
+                <h3>Menu</h3>
+              </div>
+              <button className={styles.closeSidebar} onClick={() => setShowInsightsSidebar(false)}>&times;</button>
+            </div>
+            <div className={styles.sidebarContent}>
+              <nav className={styles.sidebarNav}>
+                <Link to="/map" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
+                  <span className={styles.linkIcon}>🗺️</span> Map
+                </Link>
+                <Link to="/runs" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
+                  <span className={styles.linkIcon}>🏃</span> My History
+                </Link>
+                <Link to="/insights" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
+                  <span className={styles.linkIcon}>📈</span> Insights
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Routing Area */}
       <main className={styles.mainContent}>
@@ -145,8 +199,8 @@ function App() {
             />
           } />
           <Route path="/runs" element={<History />} />
+          <Route path="/insights" element={<Insights />} />
           <Route path="/login" element={session ? <Navigate to="/map" replace /> : <Auth />} />
-          {/* Catch-all route to redirect undefined paths back to the map */}
           <Route path="*" element={<Navigate to="/map" replace />} />
         </Routes>
       </main>
