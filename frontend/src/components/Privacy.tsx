@@ -56,6 +56,43 @@ export default function Privacy() {
     }
   };
 
+  const handleExportData = async () => {
+    if (!session) return;
+
+    try {
+      // Fetch all runs for the user
+      const { data: runs, error } = await supabase
+        .from('runs')
+        .select('*')
+        .eq('user_id', session.user.id);
+
+      if (error) throw error;
+
+      const exportData = {
+        user: {
+          id: session.user.id,
+          email: session.user.email,
+          created_at: session.user.created_at,
+        },
+        runs: runs || [],
+        exported_at: new Date().toISOString(),
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `run_tracker_data_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      console.error("Export failed:", err);
+      alert("An error occurred while exporting your data: " + err.message);
+    }
+  };
+
   return (
     <div className={styles.pageWrapper} onMouseMove={handleMouseMove}>
       <div className={styles.mouseFollower} style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }} />
@@ -115,14 +152,22 @@ export default function Privacy() {
           {session && (
             <div className={styles.dangerZone}>
               <h3>Account Management</h3>
-              <p>Deleting your account will remove all your data from our servers forever.</p>
-              <button 
-                className={styles.deleteButton} 
-                onClick={handleDeleteAccount}
-                disabled={isDeleting}
-              >
-                {isDeleting ? 'Deleting...' : 'Delete My Account'}
-              </button>
+              <p>Download a copy of your data or permanently remove your account from our servers.</p>
+              <div className={styles.buttonGroup}>
+                <button 
+                  className={styles.exportButton} 
+                  onClick={handleExportData}
+                >
+                  Get My Data (.json)
+                </button>
+                <button 
+                  className={styles.deleteButton} 
+                  onClick={handleDeleteAccount}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? 'Deleting...' : 'Delete My Account'}
+                </button>
+              </div>
             </div>
           )}
         </div>

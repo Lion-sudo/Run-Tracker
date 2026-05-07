@@ -162,6 +162,12 @@
   margin-bottom: 1.5rem;
 }
 
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .deleteButton {
   background: #fff;
   color: #e74c3c;
@@ -171,6 +177,24 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.exportButton {
+  background: #007bff;
+  color: #fff;
+  border: 2px solid #007bff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exportButton:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
 }
 
 .deleteButton:hover:not(:disabled) {
