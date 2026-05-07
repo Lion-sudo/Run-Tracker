@@ -124,6 +124,7 @@
   font-size: 1.4rem; /* Restored original size */
   color: #bdc3c7;
   font-weight: 600;
+  line-height: 1;
 }
 
 .brand-dot {
@@ -131,6 +132,7 @@
   height: 12px;
   background: #35ec2f;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .story-actions {
