@@ -50,23 +50,23 @@
 }
 
 .story-header {
-  padding: 40px 48px 24px; /* Doubled padding */
+  padding: 24px 48px 16px; /* Keeping reduced vertical padding */
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   background: #ffffff;
   z-index: 10;
 }
 
 .story-app-name {
-  font-size: 1.5rem; /* Doubled font size */
+  font-size: 1.5rem; /* Restored original size */
   font-weight: 800;
   letter-spacing: 4px;
   color: #007bff;
 }
 
 .story-date {
-  font-size: 1.8rem; /* Doubled font size */
+  font-size: 1.8rem; /* Restored original size */
   font-weight: 700;
   color: #95a5a6;
 }
@@ -84,12 +84,12 @@
 }
 
 .story-footer {
-  padding: 32px 48px 40px; /* Doubled padding */
+  padding: 20px 48px 24px; /* Keeping reduced vertical padding */
   background: #ffffff;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px; 
   border-top: 2px solid rgba(0,0,0,0.05);
 }
 
@@ -104,13 +104,13 @@
 }
 
 .story-stat-value {
-  font-size: 2.6rem; /* Doubled font size */
+  font-size: 2.6rem; /* Restored original size */
   font-weight: 800;
   color: #1a1a1a;
 }
 
 .story-stat-label {
-  font-size: 1.2rem; /* Doubled font size */
+  font-size: 1.2rem; /* Restored original size */
   font-weight: 700;
   color: #95a5a6;
   letter-spacing: 1px;
@@ -121,13 +121,13 @@
   align-items: center;
   gap: 12px;
   justify-content: center;
-  font-size: 1.4rem; /* Doubled font size */
+  font-size: 1.4rem; /* Restored original size */
   color: #bdc3c7;
   font-weight: 600;
 }
 
 .brand-dot {
-  width: 12px;
+  width: 12px; /* Restored original size */
   height: 12px;
   background: #35ec2f;
   border-radius: 50%;
