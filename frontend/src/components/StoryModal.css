@@ -19,7 +19,8 @@
   align-items: center;
   gap: 20px;
   max-height: 95vh;
-  width: 100%;
+  width: fit-content; /* Only take up the space of the card and buttons */
+  pointer-events: none; /* Let clicks pass through to the overlay by default */
 }
 
 .story-preview-container {
@@ -27,36 +28,45 @@
   border-radius: 12px;
   overflow: hidden;
   max-height: calc(95vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+  width: 360px; /* Viewport width */
+  height: 640px; /* Viewport height */
+  pointer-events: auto; /* Re-enable pointer events for the card */
 }
 
 .story-card {
-  width: 360px; /* Base width */
-  height: 640px; /* 9:16 ratio */
+  width: 720px; /* Double internal width */
+  height: 1280px; /* Double internal height */
   background: #ffffff;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+  transform: scale(0.5); /* Scale down to fit the 360x640 container */
 }
 
 .story-header {
-  padding: 20px 24px 12px;
+  padding: 40px 48px 24px; /* Doubled padding */
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   background: #ffffff;
   z-index: 10;
 }
 
 .story-app-name {
-  font-size: 0.75rem;
+  font-size: 1.5rem; /* Doubled font size */
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
   color: #007bff;
 }
 
 .story-date {
-  font-size: 0.9rem;
+  font-size: 1.8rem; /* Doubled font size */
   font-weight: 700;
   color: #95a5a6;
 }
@@ -74,13 +84,13 @@
 }
 
 .story-footer {
-  padding: 16px 24px 20px;
+  padding: 32px 48px 40px; /* Doubled padding */
   background: #ffffff;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  gap: 24px;
+  border-top: 2px solid rgba(0,0,0,0.05);
 }
 
 .story-stats {
@@ -94,31 +104,31 @@
 }
 
 .story-stat-value {
-  font-size: 1.3rem;
+  font-size: 2.6rem; /* Doubled font size */
   font-weight: 800;
   color: #1a1a1a;
 }
 
 .story-stat-label {
-  font-size: 0.6rem;
+  font-size: 1.2rem; /* Doubled font size */
   font-weight: 700;
   color: #95a5a6;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .story-brand {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 1.4rem; /* Doubled font size */
   color: #bdc3c7;
   font-weight: 600;
 }
 
 .brand-dot {
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   background: #35ec2f;
   border-radius: 50%;
 }
@@ -126,6 +136,7 @@
 .story-actions {
   display: flex;
   gap: 12px;
+  pointer-events: auto; /* Re-enable pointer events for the buttons */
 }
 
 .download-button {

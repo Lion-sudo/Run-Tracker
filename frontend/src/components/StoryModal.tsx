@@ -5,9 +5,9 @@ import html2canvas from 'html2canvas';
 import 'leaflet/dist/leaflet.css';
 import './StoryModal.css';
 
-// Custom icons
+// Custom icons - Adjusted for 720px card width
 const createIcon = (color: string) => L.divIcon({
-  html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+  html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 4px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>`,
   className: 'story-icon'
 });
 
@@ -34,7 +34,8 @@ const FitBounds = ({ coordinates }: { coordinates: [number, number][] }) => {
   React.useEffect(() => {
     if (coordinates.length > 0) {
       const bounds = L.latLngBounds(coordinates);
-      map.fitBounds(bounds, { padding: [10, 10] });
+      // Minimal padding for the tightest possible focus
+      map.fitBounds(bounds, { padding: [20, 20], animate: false });
     }
   }, [map, coordinates]);
   return null;
@@ -52,14 +53,23 @@ const StoryModal: React.FC<StoryModalProps> = ({ isOpen, onClose, run }) => {
     if (!storyRef.current) return;
     
     try {
-      // Ensure Leaflet has finished rendering
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Small delay to ensure all assets in the 720px card are ready
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       const canvas = await html2canvas(storyRef.current, {
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         backgroundColor: '#ffffff',
-        scale: 2 // Higher quality
+        scale: 2, // 720px * 2 = 1440px wide output (Ultra HD)
+        logging: false,
+        imageTimeout: 0,
+        onclone: (clonedDoc) => {
+          const element = clonedDoc.querySelector('.story-card') as HTMLElement;
+          if (element) {
+            // Remove the transform scale(0.5) during export so it captures at full 720px
+            element.style.transform = 'none';
+          }
+        }
       });
       
       const link = document.createElement('a');
@@ -109,12 +119,14 @@ const StoryModal: React.FC<StoryModalProps> = ({ isOpen, onClose, run }) => {
                 touchZoom={false} 
                 doubleClickZoom={false} 
                 scrollWheelZoom={false}
+                preferCanvas={true}
+                zoomSnap={0} // Allows fractional zoom for a much tighter fit
               >
                 <TileLayer
                   attribution=""
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Polyline positions={run.route_coordinates} color="#007bff" weight={6} opacity={0.9} />
+                <Polyline positions={run.route_coordinates} color="#007bff" weight={7} opacity={0.9} />
                 <Marker position={startPoint} icon={StartIcon} />
                 <Marker position={endPoint} icon={FinishIcon} />
                 <FitBounds coordinates={run.route_coordinates} />
