@@ -217,11 +217,20 @@
   overflow-y: auto;
   padding: 0;
   z-index: 1;
-  scrollbar-width: none;
 }
 
+/* Re-enable default scrollbar for visibility when content overflows */
 .sidebarContent::-webkit-scrollbar {
-  display: none;
+  width: 4px;
+}
+
+.sidebarContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebarContent::-webkit-scrollbar-thumb {
+  background: rgba(53, 236, 47, 0.3);
+  border-radius: 10px;
 }
 
 .sidebarNav {
@@ -323,6 +332,20 @@
   overflow-y: auto;
 }
 
+/* Custom scrollbar for mobile visibility */
+@media (max-width: 768px) {
+  .mainContent::-webkit-scrollbar {
+    width: 4px;
+  }
+  .mainContent::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .mainContent::-webkit-scrollbar-thumb {
+    background: rgba(0, 123, 255, 0.2);
+    border-radius: 10px;
+  }
+}
+
 .controlPanel {
   background-color: white;
   padding: 1.5rem;
@@ -333,6 +356,24 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: relative;
+}
+
+.privacyLabel {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.privacyLabel:hover {
+  color: #007bff;
+  background: rgba(0, 123, 255, 0.05);
 }
 
 .mapControls {
@@ -433,6 +474,23 @@
   background-color: #a3cfa1; /* Greyish green */
   color: #666;
   cursor: not-allowed;
+}
+
+.privacyPanelLink {
+  position: absolute;
+  bottom: 8px;
+  right: 20px;
+  font-size: 0.65rem;
+  color: #bdc3c7;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.privacyPanelLink:hover {
+  color: #007bff;
 }
 
 .guestSaveButton {

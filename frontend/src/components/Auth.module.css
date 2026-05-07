@@ -196,10 +196,23 @@
 .message {
   margin-top: 20px;
   font-size: 0.85rem;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.4;
+}
+
+.errorMessage {
   background-color: #fff4f4;
   color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.1);
+}
+
+.successMessage {
+  background-color: #f0fff0;
+  color: #27ae60;
+  border: 1px solid rgba(39, 174, 96, 0.1);
 }
 
 .toggleButton {
@@ -216,6 +229,36 @@
 
 .toggleButton:hover {
   color: #35ec2f;
+}
+
+.privacyConsent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.privacyConsent input {
+  cursor: pointer;
+}
+
+.privacyConsent label {
+  cursor: pointer;
+}
+
+.privacyLink {
+  color: #7f8c8d;
+  font-weight: 700;
+  border-bottom: 2px dotted #7f8c8d;
+  transition: all 0.2s;
+}
+
+.privacyLink:hover {
+  color: #35ec2f;
+  border-color: #35ec2f;
 }
 
 /* Adaptive styles for mobile/tablets */

@@ -8,7 +8,9 @@ export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
+  const [agreedToPrivacy, setAgreedToPrivacy] = useState(false);
   const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
 
@@ -18,14 +20,23 @@ export default function Auth() {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (isSignUp && !agreedToPrivacy) {
+      setMessage('Please agree to the privacy terms before signing up.');
+      setIsError(true);
+      return;
+    }
+
     setLoading(true);
     setMessage('');
+    setIsError(false);
     
     try {
       if (isSignUp) {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        setMessage('Success! (Check your email for the confirmation link)');
+        setMessage('Success!\nCheck your email for the confirmation link');
+        setIsError(false);
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -33,6 +44,7 @@ export default function Auth() {
       }
     } catch (error: any) {
       setMessage(error.error_description || error.message);
+      setIsError(true);
     } finally {
       setLoading(false);
     }
@@ -80,16 +92,39 @@ export default function Auth() {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          {isSignUp && (
+            <div className={styles.privacyConsent}>
+              <input 
+                type="checkbox" 
+                id="privacy" 
+                checked={agreedToPrivacy}
+                onChange={(e) => setAgreedToPrivacy(e.target.checked)}
+              />
+              <label htmlFor="privacy">
+                I've read the <span className={styles.privacyLink} onClick={() => navigate('/privacy')}>privacy terms</span>
+              </label>
+            </div>
+          )}
+
           <button className={styles.button} disabled={loading}>
             {loading ? 'Loading...' : (isSignUp ? 'Sign Up' : 'Log In')}
           </button>
         </form>
 
-        {message && <p className={styles.message}>{message}</p>}
+        {message && (
+          <p className={`${styles.message} ${isError ? styles.errorMessage : styles.successMessage}`}>
+            {message}
+          </p>
+        )}
         
         <button 
           className={styles.toggleButton} 
-          onClick={() => setIsSignUp(!isSignUp)}
+          onClick={() => {
+            setIsSignUp(!isSignUp);
+            setMessage('');
+            setIsError(false);
+          }}
         >
           {isSignUp ? "Already have an account? Log In" : "Don't have an account? Sign Up"}
         </button>
