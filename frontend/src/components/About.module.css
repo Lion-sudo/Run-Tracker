@@ -16,7 +16,7 @@
   left: 0;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(31, 6, 252, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 95, 31, 0.15) 0%, rgba(255, 215, 0, 0.08) 40%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
@@ -44,7 +44,7 @@
 .contourLine {
   position: absolute;
   inset: 0;
-  border: 0.25vw solid rgba(31, 6, 252, 0.4);
+  border: 0.25vw solid rgba(255, 95, 31, 0.4);
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   animation: morph 20s infinite alternate ease-in-out;
 }
@@ -52,13 +52,13 @@
 .contourLine:nth-child(2) {
   inset: 15%;
   animation-duration: 25s;
-  border-color: rgba(31, 6, 252, 0.3);
+  border-color: rgba(255, 95, 31, 0.3);
 }
 
 .contourLine:nth-child(3) {
   inset: 30%;
   animation-duration: 30s;
-  border-color: rgba(31, 6, 252, 0.2);
+  border-color: rgba(255, 95, 31, 0.2);
 }
 
 @keyframes morph {
@@ -86,7 +86,7 @@
 .title {
   font-size: 3rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #3D0C02;
   letter-spacing: -0.1rem;
   text-align: center;
 }
@@ -96,8 +96,8 @@
   backdrop-filter: blur(20px);
   padding: 3rem;
   border-radius: 24px;
-  border: 1px solid rgba(31, 6, 252, 0.1);
-  box-shadow: 0 10px 40px rgba(31, 6, 252, 0.05);
+  border: 1px solid rgba(255, 95, 31, 0.1);
+  box-shadow: 0 10px 40px rgba(255, 95, 31, 0.05);
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -105,7 +105,7 @@
 
 .section h2 {
   font-size: 1.5rem;
-  color: #1a1a1a;
+  color: #3D0C02;
   margin-bottom: 1rem;
   font-weight: 700;
   display: flex;
@@ -117,12 +117,12 @@
   content: '';
   width: 4px;
   height: 24px;
-  background: #1f06fc;
+  background: #FF5F1F;
   border-radius: 2px;
 }
 
 .section p {
-  color: #4a5568;
+  color: #5d4037;
   line-height: 1.7;
   font-size: 1.05rem;
 }
@@ -137,7 +137,7 @@
 }
 
 .section li {
-  color: #4a5568;
+  color: #5d4037;
   padding-left: 20px;
   position: relative;
   line-height: 1.7;
@@ -152,7 +152,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #1f06fc;
+  background-color: #FF5F1F;
 }
 
 @media (max-width: 768px) {
@@ -166,13 +166,13 @@
 }
 
 .githubLink {
-  color: #1f06fc;
+  color: #FF5F1F;
   text-decoration: none;
   font-weight: 700;
   transition: color 0.2s ease;
 }
 
 .githubLink:hover {
-  color: #3f0aff;
+  color: #FF8C00;
   text-decoration: underline;
 }
