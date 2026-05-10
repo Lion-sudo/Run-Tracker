@@ -161,7 +161,11 @@ function App() {
                 <div className={styles.contourLine} />
                 <div className={styles.contourLine} />
               </div>
-              <div className={styles.activePath} />
+              <div className={styles.bluePeak}>
+                <div className={styles.blueContourLine} />
+                <div className={styles.blueContourLine} />
+                <div className={styles.blueContourLine} />
+              </div>
             </div>
 
             <div className={styles.sidebarHeader}>

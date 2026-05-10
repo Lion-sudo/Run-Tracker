@@ -144,32 +144,49 @@
 .sidebarTopo .contourLine {
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(53, 236, 47, 0.3);
+  border: 2px solid rgba(53, 236, 47, 0.5);
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   animation: sidebarMorph 20s infinite alternate ease-in-out;
 }
 
 .sidebarTopo .contourLine:nth-child(2) {
   inset: 50px;
-  border-color: rgba(53, 236, 47, 0.2);
+  border-color: rgba(53, 236, 47, 0.4);
   animation-duration: 25s;
 }
 
 .sidebarTopo .contourLine:nth-child(3) {
   inset: 100px;
-  border-color: rgba(53, 236, 47, 0.1);
+  border-color: rgba(53, 236, 47, 0.3);
   animation-duration: 30s;
 }
 
-.sidebarTopo .activePath {
+.sidebarTopo .bluePeak {
   position: absolute;
-  bottom: -50px;
-  left: -50px;
-  width: 300px;
-  height: 300px;
-  border: 2px dashed rgba(53, 236, 47, 0.2);
-  border-radius: 50%;
-  animation: slowRotate 40s infinite linear;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+}
+
+.sidebarTopo .blueContourLine {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(0, 123, 255, 0.4);
+  border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%;
+  animation: sidebarMorph 25s infinite alternate-reverse ease-in-out;
+}
+
+.sidebarTopo .blueContourLine:nth-child(2) {
+  inset: 60px;
+  border-color: rgba(0, 123, 255, 0.3);
+  animation-duration: 30s;
+}
+
+.sidebarTopo .blueContourLine:nth-child(3) {
+  inset: 120px;
+  border-color: rgba(0, 123, 255, 0.2);
+  animation-duration: 35s;
 }
 
 @keyframes sidebarMorph {
@@ -221,16 +238,21 @@
 
 /* Re-enable default scrollbar for visibility when content overflows */
 .sidebarContent::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .sidebarContent::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .sidebarContent::-webkit-scrollbar-thumb {
-  background: rgba(53, 236, 47, 0.3);
+  background: rgba(53, 236, 47, 0.6);
   border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebarContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(53, 236, 47, 0.8);
 }
 
 .sidebarNav {
