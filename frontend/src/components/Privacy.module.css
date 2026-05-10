@@ -16,7 +16,7 @@
   left: 0;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(255, 126, 0, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 98, 102, 0.15) 0%, rgba(163, 203, 56, 0.05) 40%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
@@ -44,7 +44,7 @@
 .contourLine {
   position: absolute;
   inset: 0;
-  border: 0.25vw solid rgba(255, 126, 0, 0.4);
+  border: 0.25vw solid rgba(0, 98, 102, 0.4);
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   animation: morph 20s infinite alternate ease-in-out;
 }
@@ -52,13 +52,13 @@
 .contourLine:nth-child(2) { 
   inset: 15%; 
   animation-duration: 25s; 
-  border-color: rgba(255, 126, 0, 0.3);
+  border-color: rgba(0, 98, 102, 0.3);
 }
 
 .contourLine:nth-child(3) { 
   inset: 30%; 
   animation-duration: 30s; 
-  border-color: rgba(255, 126, 0, 0.2);
+  border-color: rgba(0, 98, 102, 0.2);
 }
 
 @keyframes morph {
@@ -79,7 +79,7 @@
 .title {
   font-size: 3rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #1E272E;
   letter-spacing: -0.1rem;
   text-align: center;
 }
@@ -89,8 +89,8 @@
   backdrop-filter: blur(20px);
   padding: 3rem;
   border-radius: 24px;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  box-shadow: 0 10px 40px rgba(255, 126, 0, 0.05);
+  border: 1px solid rgba(0, 98, 102, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 98, 102, 0.05);
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -98,7 +98,7 @@
 
 .section h2 {
   font-size: 1.5rem;
-  color: #1a1a1a;
+  color: #1E272E;
   margin-bottom: 1rem;
   font-weight: 700;
   display: flex;
@@ -110,12 +110,12 @@
   content: '';
   width: 4px;
   height: 24px;
-  background: #ff7e00;
+  background: #006266;
   border-radius: 2px;
 }
 
 .section p {
-  color: #4a5568;
+  color: #2d3436;
   line-height: 1.7;
   font-size: 1.05rem;
 }
@@ -130,7 +130,7 @@
 }
 
 .section li {
-  color: #4a5568;
+  color: #2d3436;
   padding-left: 20px;
   position: relative;
 }
@@ -143,17 +143,17 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #ff7e00;
+  background-color: #A3CB38;
 }
 
 .important {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: rgba(255, 126, 0, 0.05);
+  background: rgba(0, 98, 102, 0.05);
   border-radius: 12px;
-  border-left: 4px solid #ff7e00;
+  border-left: 4px solid #006266;
   font-weight: 600 !important;
-  color: #ff7e00 !important;
+  color: #006266 !important;
 }
 
 .dangerZone {
@@ -192,9 +192,9 @@
 }
 
 .exportButton {
-  background: #ff7e00;
+  background: #006266;
   color: #fff;
-  border: 2px solid #ff7e00;
+  border: 2px solid #006266;
   padding: 12px 24px;
   border-radius: 12px;
   font-weight: 700;
@@ -203,10 +203,10 @@
 }
 
 .exportButton:hover {
-  background: #e67200;
-  border-color: #e67200;
+  background: #004d4d;
+  border-color: #004d4d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 126, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 98, 102, 0.2);
 }
 
 .deleteButton:hover:not(:disabled) {
@@ -233,7 +233,7 @@
 }
 
 .backButton:hover {
-  color: #ff7e00;
+  color: #006266;
 }
 
 @media (max-width: 768px) {
