@@ -136,11 +136,14 @@
 }
 
 .section li::before {
-  content: '→';
+  content: '';
   position: absolute;
   left: 0;
-  color: #ff7e00;
-  font-weight: 800;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ff7e00;
 }
 
 .important {

@@ -7,6 +7,7 @@ import Auth from './components/Auth';
 import History from './components/History';
 import Insights from './components/Insights';
 import Privacy from './components/Privacy';
+import About from './components/About';
 import styles from './App.module.css';
 
 function App() {
@@ -136,6 +137,7 @@ function App() {
             <Link to="/map" className={`${styles.navLink} ${styles.desktopOnly}`}>Map</Link>
             <Link to="/runs" className={`${styles.navLink} ${styles.desktopOnly}`}>My History</Link>
             <Link to="/insights" className={`${styles.navLink} ${styles.desktopOnly}`}>Insights</Link>
+            <Link to="/about" className={`${styles.navLink} ${styles.desktopOnly}`}>About</Link>
             <Link to="/privacy" className={`${styles.navLink} ${styles.desktopOnly}`}>Privacy</Link>
             
             <button 
@@ -197,6 +199,9 @@ function App() {
                 <Link to="/insights" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
                   <span className={styles.linkIcon}>📈</span> Insights
                 </Link>
+                <Link to="/about" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
+                  <span className={styles.linkIcon}>ℹ️</span> About
+                </Link>
                 <Link to="/privacy" className={styles.sidebarLink} onClick={() => setShowInsightsSidebar(false)}>
                   <span className={styles.linkIcon}>🛡️</span> Privacy
                 </Link>
@@ -220,6 +225,7 @@ function App() {
           } />
           <Route path="/runs" element={<History />} />
           <Route path="/insights" element={<Insights />} />
+          <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/login" element={session ? <Navigate to="/map" replace /> : <Auth />} />
           <Route path="*" element={<Navigate to="/map" replace />} />
