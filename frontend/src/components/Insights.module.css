@@ -143,12 +143,12 @@
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #0B132B;
   margin-bottom: 1.5rem;
   text-align: center;
-  letter-spacing: -0.05rem;
+  letter-spacing: -0.1rem;
 }
 
 .rangeSelector {
@@ -264,9 +264,20 @@
 
 .heatmapTitle {
   margin: 0;
-  font-size: 1.1rem;
-  color: #1a1a1a;
-  font-weight: 600;
+  font-size: 1.5rem;
+  color: #0B132B;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.heatmapTitle::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: #007bff;
+  border-radius: 2px;
 }
 
 .mapContainerWrapper {
