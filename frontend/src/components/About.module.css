@@ -1,5 +1,5 @@
 .pageWrapper {
-  min-height: 100vh;
+  min-height: 100%;
   width: 100%;
   background: #ffffff;
   position: relative;
@@ -31,6 +31,7 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0.8;
+  overflow: hidden;
 }
 
 .peak {
