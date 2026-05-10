@@ -50,7 +50,7 @@
 
 .contourLine {
   position: absolute;
-  border: 0.4vw solid rgba(53, 236, 47, 0.5);
+  border: 0.25vw solid rgba(53, 236, 47, 0.5);
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   animation: morph 20s infinite alternate ease-in-out;
   transition: all 0.5s ease;
