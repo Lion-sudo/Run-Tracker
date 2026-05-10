@@ -22,6 +22,10 @@
   margin: 0 auto;
 }
 
+.authWrapper {
+  display: none; /* Hidden on desktop, logout is inside navLinks */
+}
+
 .logo {
   color: white;
   text-decoration: none;
@@ -677,31 +681,61 @@
 
 @media (max-width: 768px) {
   .desktopOnly {
-    display: none;
+    display: none !important;
   }
 
   .mobileOnly {
     display: inline-block;
   }
 
+  .authWrapper {
+    display: flex; /* Show on mobile */
+    flex: 1;
+    justify-content: flex-start;
+  }
+
   .hamburgerButton {
     display: block;
+    padding: 5px;
   }
 
   .headerNav {
-    flex-direction: column;
-    gap: 15px;
-    padding: 0.75rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0;
+    width: 100%;
   }
 
-  .navLinks {
-    gap: 1.5rem;
-    font-size: 0.9rem;
+  .authWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
   }
 
   .logo {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    flex: 2;
+    text-align: center;
+    white-space: nowrap;
   }
+
+  .navLinks {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0;
+  }
+
+  .logoutButton {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+
+  .navLink {
+    font-size: 0.8rem;
+  }
+
 
   .controlPanel {
     padding: 1rem 0.5rem;

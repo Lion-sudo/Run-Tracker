@@ -122,10 +122,19 @@ function App() {
       {/* Header Area */}
       <header className={styles.header}>
         <div className={styles.headerNav}>
+          <div className={styles.authWrapper}>
+            {session ? (
+              <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+            ) : (
+              <Link to="/login" className={styles.navLink}>Log In</Link>
+            )}
+          </div>
+
           <Link to="/" className={styles.logo}>Run Tracker</Link>
+          
           <div className={styles.navLinks}>
-            <Link to="/map" className={styles.navLink}>Map</Link>
-            <Link to="/runs" className={styles.navLink}>My History</Link>
+            <Link to="/map" className={`${styles.navLink} ${styles.desktopOnly}`}>Map</Link>
+            <Link to="/runs" className={`${styles.navLink} ${styles.desktopOnly}`}>My History</Link>
             <Link to="/insights" className={`${styles.navLink} ${styles.desktopOnly}`}>Insights</Link>
             <Link to="/privacy" className={`${styles.navLink} ${styles.desktopOnly}`}>Privacy</Link>
             
@@ -141,11 +150,13 @@ function App() {
               </div>
             </button>
 
-            {session ? (
-              <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
-            ) : (
-              <Link to="/login" className={styles.navLink}>Log In</Link>
-            )}
+            <div className={styles.desktopOnly}>
+              {session ? (
+                <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+              ) : (
+                <Link to="/login" className={styles.navLink}>Log In</Link>
+              )}
+            </div>
           </div>
         </div>
       </header>
