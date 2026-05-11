@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import html2canvas from 'html2canvas';
+import { useTheme } from '../context/ThemeContext';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
 import './HeatmapStoryModal.css';
@@ -56,6 +57,24 @@ const HeatLayer = ({ points }: { points: [number, number, number][] }) => {
 
 const HeatmapStoryModal: React.FC<HeatmapStoryModalProps> = ({ isOpen, onClose, points, stats, rangeName }) => {
   const storyRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const [scale, setScale] = useState(0.5);
+
+  useEffect(() => {
+    const updateScale = () => {
+      const availableWidth = window.innerWidth - 40;
+      const availableHeight = window.innerHeight - 150;
+      const scaleX = availableWidth / 720;
+      const scaleY = availableHeight / 1280;
+      setScale(Math.min(scaleX, scaleY, 0.5));
+    };
+    
+    if (isOpen) {
+      updateScale();
+      window.addEventListener('resize', updateScale);
+      return () => window.removeEventListener('resize', updateScale);
+    }
+  }, [isOpen]);
 
   if (!isOpen || points.length === 0) return null;
 
@@ -66,24 +85,88 @@ const HeatmapStoryModal: React.FC<HeatmapStoryModalProps> = ({ isOpen, onClose, 
       // Ensure Leaflet has finished rendering
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const canvas = await html2canvas(storyRef.current, {
+      // PASS 1: Capture background (header, map tiles, footer) - Hide heatmap
+      const canvasPass1 = await html2canvas(storyRef.current, {
         useCORS: true,
         allowTaint: false,
-        backgroundColor: '#ffffff',
-        scale: 2, // Ultra HD output
+        backgroundColor: theme === 'dark' ? '#1e1e1e' : '#ffffff',
+        scale: 2,
+        logging: false,
+        imageTimeout: 0,
+        onclone: (clonedDoc) => {
+          const element = clonedDoc.querySelector('.story-card') as HTMLElement;
+          if (element) element.style.transform = 'none';
+          
+          // Hide Heatmap layer
+          const overlayPane = clonedDoc.querySelector('.leaflet-overlay-pane') as HTMLElement;
+          if (overlayPane) overlayPane.style.visibility = 'hidden';
+        }
+      });
+
+      const finalCanvas = document.createElement('canvas');
+      finalCanvas.width = canvasPass1.width;
+      finalCanvas.height = canvasPass1.height;
+      const ctxFinal = finalCanvas.getContext('2d')!;
+
+      // Apply inversion to map if in dark mode
+      if (theme === 'dark') {
+        const mapEl = storyRef.current.querySelector('.story-map-container') as HTMLElement;
+        const renderScale = 2;
+        const mapY = mapEl.offsetTop * renderScale;
+        const mapH = mapEl.offsetHeight * renderScale;
+
+        // Header
+        ctxFinal.drawImage(canvasPass1, 0, 0, canvasPass1.width, mapY, 0, 0, canvasPass1.width, mapY);
+        
+        // Map (Inverted)
+        ctxFinal.save();
+        ctxFinal.filter = 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)';
+        ctxFinal.drawImage(canvasPass1, 0, mapY, canvasPass1.width, mapH, 0, mapY, canvasPass1.width, mapH);
+        ctxFinal.restore();
+
+        // Footer
+        const footerY = mapY + mapH;
+        const footerH = canvasPass1.height - footerY;
+        ctxFinal.drawImage(canvasPass1, 0, footerY, canvasPass1.width, footerH, 0, footerY, canvasPass1.width, footerH);
+      } else {
+        ctxFinal.drawImage(canvasPass1, 0, 0);
+      }
+
+      // PASS 2: Capture Heatmap only (Transparent)
+      const canvasPass2 = await html2canvas(storyRef.current, {
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: null,
+        scale: 2,
         logging: false,
         imageTimeout: 0,
         onclone: (clonedDoc) => {
           const element = clonedDoc.querySelector('.story-card') as HTMLElement;
           if (element) {
             element.style.transform = 'none';
+            element.style.background = 'transparent';
           }
+          
+          const header = clonedDoc.querySelector('.story-header') as HTMLElement;
+          if (header) header.style.visibility = 'hidden';
+          const footer = clonedDoc.querySelector('.story-footer') as HTMLElement;
+          if (footer) footer.style.visibility = 'hidden';
+          const tilePane = clonedDoc.querySelector('.leaflet-tile-pane') as HTMLElement;
+          if (tilePane) tilePane.style.visibility = 'hidden';
+          
+          const mapContainer = clonedDoc.querySelector('.story-map-container') as HTMLElement;
+          if (mapContainer) mapContainer.style.background = 'transparent';
+          const map = clonedDoc.querySelector('.story-map') as HTMLElement;
+          if (map) map.style.background = 'transparent';
         }
       });
+
+      // Composite Heatmap over Map
+      ctxFinal.drawImage(canvasPass2, 0, 0);
       
       const link = document.createElement('a');
       link.download = `heatmap-story-${rangeName}.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.href = finalCanvas.toDataURL('image/png');
       link.click();
     } catch (err) {
       console.error("Failed to generate heatmap story image:", err);
@@ -91,22 +174,18 @@ const HeatmapStoryModal: React.FC<HeatmapStoryModalProps> = ({ isOpen, onClose, 
     }
   };
 
-  const formatDuration = (totalSeconds: number) => {
-    const hrs = Math.floor(totalSeconds / 3600);
-    const mins = Math.floor((totalSeconds % 3600) / 60);
-    const secs = totalSeconds % 60;
-    
-    if (hrs > 0) {
-      return `${hrs}h ${mins}m`;
-    }
-    return `${mins}m ${secs}s`;
-  };
-
   return (
     <div className="story-overlay" onClick={onClose}>
       <div className="story-modal" onClick={e => e.stopPropagation()}>
-        <div className="story-preview-container">
-          <div ref={storyRef} className="story-card">
+        <div 
+          className="story-preview-container"
+          style={{ width: 720 * scale, height: 1280 * scale, position: 'relative', display: 'block' }}
+        >
+          <div 
+            ref={storyRef} 
+            className="story-card"
+            style={{ transform: `scale(${scale})`, transformOrigin: 'top left', position: 'absolute', top: 0, left: 0 }}
+          >
             <div className="story-header">
               <span className="story-app-name">RUN TRACKER</span>
               <span className="story-date">{rangeName.toUpperCase()} HEATMAP</span>
