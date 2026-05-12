@@ -21,6 +21,7 @@
   max-height: 95vh;
   width: fit-content;
   pointer-events: none;
+  position: relative;
 }
 
 .story-preview-container {
@@ -166,10 +167,34 @@
   border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.cancel-button:active {
+  transform: scale(0.98);
 }
 
 .story-icon {
   background: none !important;
   border: none !important;
+}
+
+@media (max-width: 480px) {
+  .story-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .download-button, .cancel-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
 }
 
