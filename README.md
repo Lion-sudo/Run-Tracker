@@ -12,11 +12,10 @@ A lightweight, mobile-first web application designed to help runners map their r
 
 ## 📺 Demo
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/demo-dark.gif">
-  <source media="(prefers-color-scheme: light)" srcset="assets/demo-light.gif">
-  <img alt="Run Tracker Demo" src="assets/demo-light.gif" width="100%">
-</picture>
+<div align="center">
+  <img src="assets/demo-light.gif" width="49.5%" alt="Light Mode Demo" />
+  <img src="assets/demo-dark.gif" width="49.5%" alt="Dark Mode Demo" />
+</div>
 
 ---
 
