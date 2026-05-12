@@ -23,13 +23,13 @@ export default function About() {
       </div>
 
       <div className={styles.container}>
-        <h1 className={styles.title}>About Run Planner</h1>
+        <h1 className={styles.title}>About Run Tracker</h1>
         
         <div className={styles.contentCard}>
           <section className={styles.section}>
             <h2>The Project</h2>
             <p>
-              Run Planner is a lightweight, mobile-first web application designed to help runners 
+              Run Tracker is a lightweight, mobile-first web application designed to help runners
               map their routes, track their distances, and monitor their progress over time. 
               This is my first full-stack web project, built as a long-term learning exercise to master 
               modern web development practices, responsive design, and database integration.
