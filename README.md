@@ -45,22 +45,27 @@ A lightweight, mobile-first web application designed to help runners map their r
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Lion-sudo/Run-Tracker.git
-   cd run-tracker/frontend
+   cd Run-Tracker
    ```
 
-2. **Install dependencies:**
+2. **Navigate to the frontend directory:**
+   ```bash
+   cd frontend
+   ```
+
+3. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Environment Setup:**
+4. **Environment Setup:**
    Create a `.env` file in the `frontend` directory and add your Supabase credentials:
    ```env
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 
-4. **Run the development server:**
+5. **Run the development server:**
    ```bash
    npm run dev
    ```
