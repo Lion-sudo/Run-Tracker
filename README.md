@@ -27,7 +27,7 @@ A lightweight, mobile-first web application designed to help runners map their r
 - **Frontend:** React 19, TypeScript, Vite
 - **Maps:** Leaflet, React-Leaflet, OpenStreetMap
 - **Routing:** OSRM (Open Source Routing Machine) API
-- **Backend/Auth:** Supabase (PostgreSQL)
+- **Backend / Auth / Database:** Supabase (PostgreSQL)
 - **Styling:** CSS Modules, Topographic UI elements
 - **Image Export:** html2canvas
 
