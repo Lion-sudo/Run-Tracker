@@ -10,7 +10,7 @@ A lightweight, mobile-first web application designed to help runners map their r
 
 ---
 
-## 📺 Demo
+## 📺 Demo (Light mode and Dark mode)
 
 <div align="center">
   <img src="assets/demo-light.gif" width="49.5%" alt="Light Mode Demo" />
