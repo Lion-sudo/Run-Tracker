@@ -212,7 +212,13 @@ export default function Insights() {
                 </div>
                 <button 
                   className={styles.storyButton}
-                  onClick={() => setIsStoryModalOpen(true)}
+                  onClick={() => {
+                    if (currentStats.count > 0) {
+                      setIsStoryModalOpen(true);
+                    } else {
+                      alert("Cannot create an image because there are no runs in the selected time range.");
+                    }
+                  }}
                 >
                   Create Story
                 </button>

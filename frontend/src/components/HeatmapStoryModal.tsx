@@ -88,7 +88,7 @@ const HeatmapStoryModal: React.FC<HeatmapStoryModalProps> = ({ isOpen, onClose, 
     }
   }, [isOpen]);
 
-  if (!isOpen || points.length === 0) return null;
+  if (!isOpen) return null;
 
   const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
